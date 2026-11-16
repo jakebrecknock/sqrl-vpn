@@ -73,6 +73,13 @@ line under the title are plain text in `content/_index.md`, so edit them there.
   headings, Inter for text) from Google Fonts
 - To add your own logo next to "SQrL" in the navbar, save it as
   `assets/icons/logo.svg` and set `navbar_logo: true` in `hugo.yaml`
+- `assets/js/sqrl.js` – the interactive bits: scroll animations, the map demo,
+  reading progress bar, back-to-top button, and ← / → page navigation
+- `layouts/_shortcodes/server-map.html` – the clickable server map on the homepage
+  (city latencies are sample data); the map image is `static/images/world-dots.svg`
+- `layouts/_shortcodes/architecture.html` – the diagram on the Tech page
+- `layouts/_partials/footer.html`, `section-index.html`, `page-meta-lastmod.html`
+  and `sqrl/` – footer, card-style section lists and the previous/next bar
 - `layouts/_shortcodes/competency-cards.html` – builds the competency cards on
   the homepage and Competencies page from the files in `content/competencies/`,
   so a new competency page shows up there automatically

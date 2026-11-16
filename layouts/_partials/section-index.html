@@ -1,0 +1,31 @@
+{{/* Based on Docsy (@docsy/theme 0.18.0). SQrL: the list of child pages is shown
+     as a grid of cards (with each page's question count) instead of a plain list. */ -}}
+<div class="section-index">
+    {{ $page := .Page -}}
+    {{ $pages := (where .Site.Pages "Section" .Section).ByWeight -}}
+    {{ $pages = (where $pages "Type" "!=" "search") }}
+    {{ $pages = (where $pages ".Params.hide_summary" "!=" true) -}}
+    {{ $pages = (where $pages ".Parent" "!=" nil) -}}
+    {{ $pages = (where $pages ".Parent.File" "!=" nil) -}}
+    {{ if $page.File -}}
+        {{ $pages = (where $pages "Parent.File.UniqueID" "==" $page.File.UniqueID) -}}
+    {{ end -}}
+    {{ if or $page.Params.no_list (eq (len $pages) 0) -}}
+    {{ else -}}
+    <div class="sqrl-index">
+        {{ range $pages -}}
+            {{ $manualLink := cond (isset .Params "manuallink") .Params.manualLink ( cond (isset .Params "manuallinkrelref") (relref . .Params.manualLinkRelref) .RelPermalink) -}}
+            {{ $q := len (findRE `sqrl-question` .Content) -}}
+            {{ $kids := len .Pages -}}
+            <a class="sqrl-index__card" href="{{ $manualLink }}">
+                <span class="sqrl-index__top">
+                    <b>{{- .Title -}}</b>
+                    {{ if gt $q 0 }}<span class="sqrl-qbadge">{{ $q }}Q</span>{{ else if gt $kids 0 }}<span class="sqrl-qbadge">{{ $kids }}</span>{{ end }}
+                </span>
+                {{ with .Description }}<span class="sqrl-index__desc">{{ . | markdownify }}</span>{{ end }}
+                <span class="sqrl-index__go" aria-hidden="true">→</span>
+            </a>
+        {{ end -}}
+    </div>
+    {{ end -}}
+</div>

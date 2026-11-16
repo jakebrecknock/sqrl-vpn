@@ -1,0 +1,10 @@
+{{- /* SQrL: returns a section and everything under it, in sidebar order. */ -}}
+{{- $out := slice . -}}
+{{- range .Pages.ByWeight -}}
+  {{- if .IsSection -}}
+    {{- range partial "sqrl/flatten.html" . -}}{{- $out = $out | append . -}}{{- end -}}
+  {{- else -}}
+    {{- $out = $out | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

@@ -56,6 +56,10 @@ params:
   # github_repo: https://github.com/USERNAME/REPO
   # github_branch: main
 
+  # Links shown in the footer
+  github_site_repo: https://github.com/jakebrecknock/sqrl-vpn
+  author_site: https://jakebrecknock.com
+
   # Built-in search box (works on a static site, no server needed)
   offlineSearch: true
 

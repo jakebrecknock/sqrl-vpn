@@ -45,22 +45,66 @@ _This VPN was a part of a Grinnell College CSC course (CSC-324). The actual prod
 {{% /blocks/section %}}
 
 
+{{% blocks/section color="light" %}}
+<div class="sqrl-what" id="what-is-sqrl">
+<div class="sqrl-what__intro">
+<p class="sqrl-kicker">What is SQrL?</p>
+<h2 class="sqrl-section-title">A VPN that’s simple by default and powerful when you need it</h2>
+<p class="sqrl-lede">SQrL is a VPN built by three Grinnell College computer science students for CSC-324. It sends your internet traffic through an encrypted WireGuard tunnel to one of our servers, so the sites you visit see the server’s location instead of yours, and the network you’re on, like café or dorm Wi-Fi, can’t read what you’re doing.</p>
+<p>We started by interviewing people who already use VPNs. We kept hearing the same complaints: streaming sites block well-known VPN servers, the apps are confusing the first time you open them, the useful features sit behind a paywall, and some, like port forwarding for torrenting, are missing entirely. SQrL is our answer to those complaints.</p>
+</div>
+
+{{< server-map >}}
+
+<div class="sqrl-features">
+  <div class="sqrl-feature">
+    <div class="sqrl-feature__icon"><i class="fas fa-power-off"></i></div>
+    <h3>One click, safe defaults</h3>
+    <p>Every privacy protection is on out of the box: the kill switch, DNS leak protection and IPv6 leak protection. Anything that could break your connection stays off until you turn it on.</p>
+  </div>
+  <div class="sqrl-feature">
+    <div class="sqrl-feature__icon"><i class="fas fa-gauge-high"></i></div>
+    <h3>Speed you can read</h3>
+    <p>Instead of raw milliseconds, each city is rated fastest, fast, slow or slowest, based on live server data that is never more than 30 seconds old.</p>
+  </div>
+  <div class="sqrl-feature">
+    <div class="sqrl-feature__icon"><i class="fas fa-sliders"></i></div>
+    <h3>Power features built in</h3>
+    <p>Port forwarding, split tunneling and DNS filtering for ads, trackers and malware are all there, tucked into an advanced section so they never get in a beginner’s way.</p>
+  </div>
+  <div class="sqrl-feature">
+    <div class="sqrl-feature__icon"><i class="fas fa-user-shield"></i></div>
+    <h3>Private by design</h3>
+    <p>There is no table for browsing history. Connection details are wiped when you disconnect, passwords are hashed with Argon2id, and server keys are only ever stored encrypted.</p>
+  </div>
+</div>
+
+<div class="sqrl-stats">
+  <div class="sqrl-stat"><span class="sqrl-stat__num" data-count="9">9</span><span class="sqrl-stat__label">server locations</span></div>
+  <div class="sqrl-stat"><span class="sqrl-stat__num" data-count="35">35</span><span class="sqrl-stat__label">database tests on every push</span></div>
+  <div class="sqrl-stat"><span class="sqrl-stat__num" data-count="30" data-suffix=" s">30 s</span><span class="sqrl-stat__label">max age of live speed data</span></div>
+  <div class="sqrl-stat"><span class="sqrl-stat__num">0</span><span class="sqrl-stat__label">browsing logs kept</span></div>
+</div>
+</div>
+{{% /blocks/section %}}
+
+
 {{% blocks/section color="dark" %}}
 <p class="sqrl-kicker">Explore</p>
 <h2 class="sqrl-section-title">Inside the project</h2>
 
 <!-- Edit the text between <p> and </p> in each card below. -->
 <div class="sqrl-cards">
-  <a class="sqrl-card" href="tech/">
+  <a class="sqrl-card" href="#what-is-sqrl">
     <div class="sqrl-card__icon"><i class="fas fa-network-wired"></i></div>
     <h3>What is SQrL?</h3>
-    <p>Placeholder: a one-line description of SQrL.</p>
+    <p>A WireGuard VPN with safe one-click defaults, live speed ratings for every city, and power features for the people who want them.</p>
     <span class="sqrl-card__link">How it works →</span>
   </a>
   <a class="sqrl-card" href="tech/">
     <div class="sqrl-card__icon"><i class="fas fa-microchip"></i></div>
     <h3>The Tech</h3>
-    <p>Placeholder: the stack and architecture at a glance.</p>
+    <p>A Kotlin app, a Go backend, a SQLite database and WireGuard tunnels, with tests running on every push.</p>
     <span class="sqrl-card__link">Explore the tech →</span>
   </a>
   <a class="sqrl-card" href="competencies/">

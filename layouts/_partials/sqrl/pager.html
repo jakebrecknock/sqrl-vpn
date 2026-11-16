@@ -1,0 +1,28 @@
+{{- /* SQrL: previous / next across a whole section (Tech or Competencies),
+       plus the page's position. The ← and → keys also work (see assets/js/sqrl.js). */ -}}
+{{- $top := .FirstSection -}}
+{{- if and $top (ne $top .Site.Home) -}}
+{{- $all := partial "sqrl/flatten.html" $top -}}
+{{- $idx := -1 -}}
+{{- range $i, $p := $all }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $idx = $i }}{{ end }}{{ end -}}
+{{- if and (ge $idx 0) (gt (len $all) 1) -}}
+{{- $prev := cond (gt $idx 0) (index $all (sub $idx 1)) nil -}}
+{{- $next := cond (lt $idx (sub (len $all) 1)) (index $all (add $idx 1)) nil -}}
+<nav class="sqrl-pager" aria-label="Page navigation">
+  <div class="sqrl-pager__progress" aria-hidden="true"><span style="width:{{ div (mul (add $idx 1) 100.0) (len $all) }}%"></span></div>
+  <div class="sqrl-pager__row">
+    {{- with $prev }}
+    <a class="sqrl-pager__link sqrl-pager__link--prev" href="{{ .RelPermalink }}" rel="prev" data-sqrl-prev>
+      <small>← Previous{{ with .Parent }}{{ if ne . $top }} · {{ .LinkTitle }}{{ end }}{{ end }}</small><b>{{ .LinkTitle }}</b>
+    </a>
+    {{- else }}<span></span>{{ end }}
+    {{- with $next }}
+    <a class="sqrl-pager__link sqrl-pager__link--next" href="{{ .RelPermalink }}" rel="next" data-sqrl-next>
+      <small>Next{{ with .Parent }}{{ if ne . $top }} · {{ .LinkTitle }}{{ end }}{{ end }} →</small><b>{{ .LinkTitle }}</b>
+    </a>
+    {{- end }}
+  </div>
+  <p class="sqrl-pager__meta"><span>{{ add $idx 1 }} of {{ len $all }} in {{ $top.LinkTitle }}</span><span class="sqrl-pager__keys"><kbd>←</kbd> <kbd>→</kbd> to move</span></p>
+</nav>
+{{- end -}}
+{{- end -}}

@@ -1,0 +1,24 @@
+{{- /* SQrL: architecture diagram for the Tech page. Clicking a box opens its tab below. */ -}}
+<figure class="sqrl-arch" aria-label="SQrL architecture: the app talks to the Go backend, which uses the SQLite database and monitors the VPN servers; your traffic travels through a WireGuard tunnel from the app to a VPN server and on to the internet.">
+  <div class="sqrl-arch__lane">
+    <span class="sqrl-arch__lane-label">Control: sign in, pick a server</span>
+    <div class="sqrl-arch__row">
+      <button type="button" class="sqrl-arch__node" data-tab="App"><i class="fas fa-mobile-screen-button"></i><b>Your device</b><small>Kotlin app</small></button>
+      <span class="sqrl-arch__link"><span>HTTPS API</span></span>
+      <button type="button" class="sqrl-arch__node" data-tab="Backend"><i class="fas fa-server"></i><b>Backend</b><small>Go</small></button>
+      <span class="sqrl-arch__link"><span>SQL</span></span>
+      <button type="button" class="sqrl-arch__node" data-tab="Database"><i class="fas fa-database"></i><b>Database</b><small>SQLite</small></button>
+    </div>
+  </div>
+  <div class="sqrl-arch__lane sqrl-arch__lane--data">
+    <span class="sqrl-arch__lane-label">Data: your traffic</span>
+    <div class="sqrl-arch__row">
+      <button type="button" class="sqrl-arch__node" data-tab="App"><i class="fas fa-laptop"></i><b>Your device</b><small>WireGuard keys</small></button>
+      <span class="sqrl-arch__link sqrl-arch__link--tunnel"><span>Encrypted tunnel</span></span>
+      <button type="button" class="sqrl-arch__node" data-tab="Tunnel"><i class="fas fa-shield-halved"></i><b>VPN server</b><small>WireGuard · UDP 51820</small></button>
+      <span class="sqrl-arch__link"><span>Out to the web</span></span>
+      <div class="sqrl-arch__node sqrl-arch__node--static"><i class="fas fa-globe"></i><b>Internet</b><small>Sees the server, not you</small></div>
+    </div>
+  </div>
+  <figcaption class="sqrl-arch__note"><i class="fas fa-heart-pulse"></i> The backend’s monitor checks every VPN server every 5–10 seconds. Tap a box to read about that part.</figcaption>
+</figure>

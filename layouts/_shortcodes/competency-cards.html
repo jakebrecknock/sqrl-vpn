@@ -1,5 +1,6 @@
 {{- /* SQrL: cards listing every competency, grouped by category.
-       Built automatically from content/competencies/, so new pages show up here. */ -}}
+       Built automatically from content/competencies/, so new pages show up here.
+       The small badge on each link is that page's number of questions. */ -}}
 {{- $root := site.GetPage "/competencies" -}}
 {{- $icons := dict "Development" "fa-code" "Verification" "fa-vial-circle-check" "Design" "fa-pen-ruler" "Engineering" "fa-gears" -}}
 {{- $cats := slice -}}
@@ -8,10 +9,15 @@
     {{- if not (in $cats .LinkTitle) -}}{{- $cats = $cats | append .LinkTitle -}}{{- end -}}
   {{- end -}}
 {{- end -}}
-<div class="sqrl-cards">
+<div class="sqrl-cards sqrl-cards--comp">
 {{- range $cat := $cats }}
+  {{- $total := 0 -}}
+  {{- range $level := $root.Sections.ByWeight }}{{ range $level.Sections }}{{ if eq .LinkTitle $cat }}{{ $total = add $total (len .Pages) }}{{ end }}{{ end }}{{ end }}
   <div class="sqrl-card sqrl-card--list">
-    <div class="sqrl-card__icon"><i class="fas {{ index $icons $cat | default "fa-circle" }}"></i></div>
+    <div class="sqrl-card__head">
+      <div class="sqrl-card__icon"><i class="fas {{ index $icons $cat | default "fa-circle" }}"></i></div>
+      <span class="sqrl-card__count">{{ $total }}</span>
+    </div>
     <h3>{{ $cat }}</h3>
     {{- range $level := $root.Sections.ByWeight }}
       {{- range $level.Sections }}
@@ -19,7 +25,8 @@
     <p class="sqrl-card__label">{{ $level.LinkTitle }}</p>
     <ul>
           {{- range .Pages.ByWeight }}
-      <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+          {{- $q := len (findRE `sqrl-question` .Content) }}
+      <li><a href="{{ .RelPermalink }}"><span>{{ .LinkTitle }}</span><span class="sqrl-qbadge" title="{{ $q }} questions">{{ $q }}Q</span></a></li>
           {{- end }}
     </ul>
         {{- end }}

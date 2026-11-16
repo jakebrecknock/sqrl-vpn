@@ -1,0 +1,13 @@
+{{/* Copied from Docsy (@docsy/theme 0.18.0) with one change, marked "SQrL". */ -}}
+{{ if and .GitInfo .Site.Params.github_repo -}}
+<div class="td-page-meta__lastmod">
+  {{ T "post_last_mod" }} {{ .Lastmod.Format .Site.Params.time_format_default -}}
+  {{ with .GitInfo }}: {{/* Trim WS */ -}}
+    <a data-proofer-ignore href="{{ $.Site.Params.github_repo }}/commit/{{ .Hash }}">
+      {{- .Subject }} ({{ .AbbreviatedHash }}) {{- /* Trim WS */ -}}
+    </a>
+  {{- end }}
+</div>
+{{ end -}}
+{{/* SQrL: previous / next navigation at the bottom of every Tech and Competencies page */ -}}
+{{ partial "sqrl/pager.html" . -}}

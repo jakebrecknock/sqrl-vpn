@@ -1,0 +1,52 @@
+{{- /* SQrL: interactive server-map demo for the homepage.
+       Coordinates: x = longitude + 180, y = 83 - latitude (matches static/images/world-dots.svg).
+       Latencies are the sample numbers from the development database seed. */ -}}
+{{- $cities := slice
+  (dict "name" "Frankfurt" "cc" "DE" "lat" 50.11 "lon" 8.68 "ms" 18)
+  (dict "name" "Amsterdam" "cc" "NL" "lat" 52.37 "lon" 4.90 "ms" 24)
+  (dict "name" "London" "cc" "GB" "lat" 51.51 "lon" -0.13 "ms" 29)
+  (dict "name" "Toronto" "cc" "CA" "lat" 43.65 "lon" -79.35 "ms" 52)
+  (dict "name" "New York" "cc" "US" "lat" 40.71 "lon" -74.01 "ms" 68)
+  (dict "name" "São Paulo" "cc" "BR" "lat" -23.55 "lon" -46.63 "ms" 94)
+  (dict "name" "Tokyo" "cc" "JP" "lat" 35.68 "lon" 139.65 "ms" 132)
+  (dict "name" "Singapore" "cc" "SG" "lat" 1.35 "lon" 103.82 "ms" 148)
+  (dict "name" "Sydney" "cc" "AU" "lat" -33.87 "lon" 151.21 "ms" 189)
+-}}
+{{- $you := dict "lat" 41.74 "lon" -92.72 -}}
+{{- $youX := add $you.lon 180 -}}{{- $youY := sub 83 $you.lat -}}
+<div class="sqrl-map" data-sqrl-map data-you-x="{{ $youX }}" data-you-y="{{ $youY }}">
+  <div class="sqrl-map__canvas">
+    <img class="sqrl-map__img" src="{{ "images/world-dots.svg" | relURL }}" alt="" aria-hidden="true" loading="lazy">
+    <svg class="sqrl-map__lines" viewBox="0 0 360 140" preserveAspectRatio="none" aria-hidden="true">
+      <path class="sqrl-map__tunnel" d="" pathLength="1"></path>
+    </svg>
+    <span class="sqrl-map__you" style="left:{{ div $youX 3.6 }}%;top:{{ div $youY 1.4 }}%"><span class="sqrl-map__you-label">You</span></span>
+    {{- range $cities }}
+    {{- $x := add .lon 180 -}}{{- $y := sub 83 .lat -}}
+    {{- $tier := cond (le .ms 25) "fastest" (cond (le .ms 60) "fast" (cond (le .ms 120) "slow" "slowest")) -}}
+    <button type="button" class="sqrl-pin sqrl-pin--{{ $tier }}" style="left:{{ div $x 3.6 }}%;top:{{ div $y 1.4 }}%"
+      data-city="{{ .name }}" data-cc="{{ .cc }}" data-x="{{ $x }}" data-y="{{ $y }}" data-ms="{{ .ms }}" data-tier="{{ $tier }}"
+      aria-label="Connect to {{ .name }}, {{ .ms }} milliseconds, {{ $tier }}">
+      <span class="sqrl-pin__dot"></span>
+      <span class="sqrl-pin__tip">{{ .name }} · {{ .ms }} ms</span>
+    </button>
+    {{- end }}
+  </div>
+  <div class="sqrl-map__panel">
+    <div class="sqrl-map__status" aria-live="polite">
+      <span class="sqrl-map__badge"><span class="sqrl-map__led"></span><span class="sqrl-map__state">Not connected</span></span>
+      <span class="sqrl-map__detail">Pick a city on the map, or let SQrL choose.</span>
+    </div>
+    <div class="sqrl-map__actions">
+      <button type="button" class="btn btn-sqrl-light" data-sqrl-fastest><i class="fas fa-bolt me-2"></i>Connect to fastest</button>
+      <button type="button" class="btn btn-sqrl-ghost" data-sqrl-disconnect hidden>Disconnect</button>
+    </div>
+    <ul class="sqrl-map__legend" aria-label="Speed tiers">
+      <li><span class="sqrl-tier sqrl-tier--fastest"></span>Fastest ≤ 25 ms</li>
+      <li><span class="sqrl-tier sqrl-tier--fast"></span>Fast ≤ 60 ms</li>
+      <li><span class="sqrl-tier sqrl-tier--slow"></span>Slow ≤ 120 ms</li>
+      <li><span class="sqrl-tier sqrl-tier--slowest"></span>Slowest</li>
+    </ul>
+    <p class="sqrl-map__note">Interactive demo using sample data from our development database.</p>
+  </div>
+</div>

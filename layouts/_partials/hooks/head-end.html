@@ -1,4 +1,7 @@
-{{/* SQrL: web fonts. Space Grotesk for headings, Inter for body text. */ -}}
+{{/* SQrL: web fonts (Space Grotesk for headings, Inter for text) and a flag so
+     scroll animations only run when JavaScript is available. */ -}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<meta name="theme-color" content="#0b1220">
+<script>document.documentElement.classList.add('sqrl-js');</script>
