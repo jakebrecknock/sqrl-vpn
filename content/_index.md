@@ -21,12 +21,41 @@ description: The story of building the SQrL VPN
   </a>
 </div>
 
-<a class="sqrl-scroll" href="#about-us">About us<i class="fas fa-chevron-down"></i></a>
+<a class="sqrl-scroll" href="#explore">Explore<i class="fas fa-chevron-down"></i></a>
 
 {{< /blocks/cover >}}
 
 
-{{% blocks/section color="white" %}}
+<!-- Wayfinding cards, right under the title. "What is SQrL?" scrolls down this
+     page; the other two open their own pages. -->
+{{% blocks/section color="dark sqrl-explore" %}}
+<h2 class="sqrl-section-title" id="explore">Inside the project</h2>
+
+<!-- Edit the text between <p> and </p> in each card below. -->
+<div class="sqrl-cards">
+  <a class="sqrl-card" href="#what-is-sqrl">
+    <div class="sqrl-card__icon"><i class="fas fa-network-wired"></i></div>
+    <h3>What is SQrL?</h3>
+    <p>A WireGuard VPN with safe one-click defaults, live speed ratings for every city, and power features for the people who want them.</p>
+    <span class="sqrl-card__link sqrl-card__link--down">How it works ↓</span>
+  </a>
+  <a class="sqrl-card" href="tech/">
+    <div class="sqrl-card__icon"><i class="fas fa-microchip"></i></div>
+    <h3>The Tech</h3>
+    <p>A Kotlin app, a Go backend, a SQLite database and WireGuard tunnels, with tests running on every push.</p>
+    <span class="sqrl-card__link">Explore the tech →</span>
+  </a>
+  <a class="sqrl-card" href="competencies/">
+    <div class="sqrl-card__icon"><i class="fas fa-list-check"></i></div>
+    <h3>Competencies</h3>
+    <p>Placeholder: a one-line intro to the competencies.</p>
+    <span class="sqrl-card__link">View competencies →</span>
+  </a>
+</div>
+{{% /blocks/section %}}
+
+
+{{% blocks/section color="light" %}}
 <div class="sqrl-about">
 
 <p class="sqrl-kicker">Who we are</p>
@@ -45,7 +74,7 @@ _This VPN was a part of a Grinnell College CSC course (CSC-324). The actual prod
 {{% /blocks/section %}}
 
 
-{{% blocks/section color="light" %}}
+{{% blocks/section color="white" %}}
 <div class="sqrl-what" id="what-is-sqrl">
 <div class="sqrl-what__intro">
 <p class="sqrl-kicker">What is SQrL?</p>
@@ -85,34 +114,6 @@ _This VPN was a part of a Grinnell College CSC course (CSC-324). The actual prod
   <div class="sqrl-stat"><span class="sqrl-stat__num" data-count="30" data-suffix=" s">30 s</span><span class="sqrl-stat__label">max age of live speed data</span></div>
   <div class="sqrl-stat"><span class="sqrl-stat__num">0</span><span class="sqrl-stat__label">browsing logs kept</span></div>
 </div>
-</div>
-{{% /blocks/section %}}
-
-
-{{% blocks/section color="dark" %}}
-<p class="sqrl-kicker">Explore</p>
-<h2 class="sqrl-section-title">Inside the project</h2>
-
-<!-- Edit the text between <p> and </p> in each card below. -->
-<div class="sqrl-cards">
-  <a class="sqrl-card" href="#what-is-sqrl">
-    <div class="sqrl-card__icon"><i class="fas fa-network-wired"></i></div>
-    <h3>What is SQrL?</h3>
-    <p>A WireGuard VPN with safe one-click defaults, live speed ratings for every city, and power features for the people who want them.</p>
-    <span class="sqrl-card__link">How it works →</span>
-  </a>
-  <a class="sqrl-card" href="tech/">
-    <div class="sqrl-card__icon"><i class="fas fa-microchip"></i></div>
-    <h3>The Tech</h3>
-    <p>A Kotlin app, a Go backend, a SQLite database and WireGuard tunnels, with tests running on every push.</p>
-    <span class="sqrl-card__link">Explore the tech →</span>
-  </a>
-  <a class="sqrl-card" href="competencies/">
-    <div class="sqrl-card__icon"><i class="fas fa-list-check"></i></div>
-    <h3>Competencies</h3>
-    <p>Placeholder: a one-line intro to the competencies.</p>
-    <span class="sqrl-card__link">View competencies →</span>
-  </a>
 </div>
 {{% /blocks/section %}}
 

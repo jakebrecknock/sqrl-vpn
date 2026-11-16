@@ -13,12 +13,12 @@
   <div class="sqrl-pager__row">
     {{- with $prev }}
     <a class="sqrl-pager__link sqrl-pager__link--prev" href="{{ .RelPermalink }}" rel="prev" data-sqrl-prev>
-      <small>← Previous{{ with .Parent }}{{ if ne . $top }} · {{ .LinkTitle }}{{ end }}{{ end }}</small><b>{{ .LinkTitle }}</b>
+      <small>← Previous{{ with .Parent }}{{ if and (ne . $top) (not .IsHome) }} · {{ .LinkTitle }}{{ end }}{{ end }}</small><b>{{ .LinkTitle }}</b>
     </a>
     {{- else }}<span></span>{{ end }}
     {{- with $next }}
     <a class="sqrl-pager__link sqrl-pager__link--next" href="{{ .RelPermalink }}" rel="next" data-sqrl-next>
-      <small>Next{{ with .Parent }}{{ if ne . $top }} · {{ .LinkTitle }}{{ end }}{{ end }} →</small><b>{{ .LinkTitle }}</b>
+      <small>Next{{ with .Parent }}{{ if and (ne . $top) (not .IsHome) }} · {{ .LinkTitle }}{{ end }}{{ end }} →</small><b>{{ .LinkTitle }}</b>
     </a>
     {{- end }}
   </div>

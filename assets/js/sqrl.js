@@ -107,54 +107,83 @@
   // ---------- Server map demo ----------
   $$('[data-sqrl-map]').forEach((map) => {
     const pins = $$('.sqrl-pin', map);
+    const rows = $$('.sqrl-city', map);
+    const canvas = $('.sqrl-map__canvas', map);
     const tunnel = $('.sqrl-map__tunnel', map);
     const state = $('.sqrl-map__state', map);
     const detail = $('.sqrl-map__detail', map);
     const fastestBtn = $('[data-sqrl-fastest]', map);
     const offBtn = $('[data-sqrl-disconnect]', map);
+    const idleText = detail.textContent;
     const yx = Number(map.dataset.youX);
     const yy = Number(map.dataset.youY);
     const tierName = { fastest: 'Fastest', fast: 'Fast', slow: 'Slow', slowest: 'Slowest' };
     const flag = (cc) => String.fromCodePoint(...cc.split('').map((c) => 127397 + c.charCodeAt(0)));
 
+    // Keep the tunnel line about 2.5px thick whatever size the map is drawn at.
+    const sizeLine = () => {
+      const w = canvas.clientWidth || 360;
+      tunnel.style.strokeWidth = String((2.5 * 360) / w);
+    };
+    sizeLine();
+    window.addEventListener('resize', sizeLine, { passive: true });
+
+    const mark = (i) => {
+      pins.forEach((p) => p.classList.toggle('is-active', p.dataset.i === i));
+      rows.forEach((r) => {
+        const on = r.dataset.i === i;
+        r.classList.toggle('is-active', on);
+        r.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    };
     const connect = (pin) => {
-      pins.forEach((p) => p.classList.toggle('is-active', p === pin));
+      mark(pin.dataset.i);
       map.classList.add('is-connected');
       map.dataset.tier = pin.dataset.tier;
       const x = Number(pin.dataset.x);
       const y = Number(pin.dataset.y);
       const cx = (yx + x) / 2;
       const cy = Math.max(3, Math.min(yy, y) - Math.max(12, Math.abs(x - yx) * 0.18));
+      sizeLine();
       tunnel.setAttribute('d', `M${yx} ${yy} Q${cx} ${cy} ${x} ${y}`);
       tunnel.classList.remove('is-drawn');
       void tunnel.getBoundingClientRect();
       tunnel.classList.add('is-drawn');
       state.textContent = 'Protected';
-      detail.innerHTML = '';
+      detail.textContent = '';
       const strong = document.createElement('b');
       strong.textContent = `${flag(pin.dataset.cc)} ${pin.dataset.city}`;
-      detail.append(strong, ` · ${pin.dataset.ms} ms · `);
       const t = document.createElement('span');
       t.className = `sqrl-tier-text sqrl-tier-text--${pin.dataset.tier}`;
       t.textContent = tierName[pin.dataset.tier];
-      detail.append(t);
+      detail.append(strong, ` · ${pin.dataset.ms} ms · `, t);
       offBtn.hidden = false;
     };
     const disconnect = () => {
-      pins.forEach((p) => p.classList.remove('is-active'));
+      mark(null);
       map.classList.remove('is-connected');
+      delete map.dataset.tier;
       tunnel.classList.remove('is-drawn');
       tunnel.setAttribute('d', '');
       state.textContent = 'Not connected';
-      detail.textContent = 'Pick a city on the map, or let SQrL choose.';
+      detail.textContent = idleText;
       offBtn.hidden = true;
     };
+    const pinFor = (el) => pins.find((p) => p.dataset.i === el.dataset.i);
     pins.forEach((p) => p.addEventListener('click', () => connect(p)));
-    fastestBtn && fastestBtn.addEventListener('click', () => {
-      const best = pins.reduce((a, b) => (Number(b.dataset.ms) < Number(a.dataset.ms) ? b : a));
-      connect(best);
+    rows.forEach((r) => {
+      r.addEventListener('click', () => connect(pinFor(r)));
+      // pointing at a city in the list lights up its pin on the map
+      const hover = (on) => () => pinFor(r).classList.toggle('is-hover', on);
+      r.addEventListener('pointerenter', hover(true));
+      r.addEventListener('pointerleave', hover(false));
+      r.addEventListener('focus', hover(true));
+      r.addEventListener('blur', hover(false));
     });
-    offBtn && offBtn.addEventListener('click', disconnect);
+    fastestBtn.addEventListener('click', () => {
+      connect(pins.reduce((a, b) => (Number(b.dataset.ms) < Number(a.dataset.ms) ? b : a)));
+    });
+    offBtn.addEventListener('click', () => { disconnect(); fastestBtn.focus(); });
   });
 
   // ---------- Tech page: architecture boxes open their tab ----------
@@ -168,40 +197,14 @@
     });
   });
 
-  // ---------- Heading links: click the # to copy a link ----------
-  const toast = document.createElement('div');
-  toast.className = 'sqrl-toast';
-  toast.setAttribute('role', 'status');
-  document.body.appendChild(toast);
-  let toastTimer;
-  const showToast = (msg) => {
-    toast.textContent = msg;
-    toast.classList.add('is-visible');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
-  };
-  $$('.td-content h2[id]').forEach((h) => {
-    const a = document.createElement('a');
-    a.className = 'sqrl-anchor';
-    a.href = `#${h.id}`;
-    a.setAttribute('aria-label', 'Copy link to this section');
-    a.textContent = '#';
-    a.addEventListener('click', (e) => {
-      const url = `${location.origin}${location.pathname}#${h.id}`;
-      if (navigator.clipboard) {
-        e.preventDefault();
-        navigator.clipboard.writeText(url).then(() => showToast('Link copied'), () => {});
-        history.replaceState(null, '', `#${h.id}`);
-      }
-    });
-    h.appendChild(a);
-  });
-
   // ---------- Keyboard: ← → move between pages, / jumps to search ----------
   document.addEventListener('keydown', (e) => {
     if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
     const t = e.target;
     if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    // Tabs, menus and the map use the arrow keys themselves.
+    if (t && t.closest && t.closest('[role="tab"], [role="tablist"], [role="menu"], .dropdown-menu, .popover, [data-sqrl-map]')) return;
+    if (e.shiftKey && e.key !== '/') return;
     if (e.key === '/') {
       const s = $$('.td-search__input').find((i) => i.offsetParent !== null);
       if (s) { e.preventDefault(); s.focus(); }
