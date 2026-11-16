@@ -39,7 +39,7 @@ description: The story of building the SQrL VPN
      Regular Markdown works: **bold**, _italics_, [links](https://...), lists.
      ============================================================ -->
 
-_This VPN was a part of a Grinnell College CSC course (CSC-324). The actual product has been coded by three of the student in said class: Alex Cyphers, Jake Brecknock, and Leo Goldman. All three of us are computer science majors at Grinnell with specialties in unique fields. I was in charge of the data base, Alex handled the UI, and Leo was the primary backend Go developer. Feel free to check out some more of my work or reach out via my [personal site] (/https://jakebrecknock.com)_
+_This VPN was a part of a Grinnell College CSC course (CSC-324). The actual product has been coded by three of the student in said class: Alex Cyphers, Jake Brecknock, and Leo Goldman. All three of us are computer science majors at Grinnell with specialties in unique fields. I was in charge of the data base, Alex handled the UI, and Leo was the primary backend Go developer. Feel free to check out some more of my work or reach out via my [personal site](https://jakebrecknock.com)_
 
 </div>
 {{% /blocks/section %}}
