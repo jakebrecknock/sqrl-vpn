@@ -1,0 +1,19 @@
+{
+  "name": "sqrl-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Project site documenting the making of the SQrL VPN",
+  "scripts": {
+    "hugo": "chmod +x scripts/bin/sass && PATH=\"$PWD/scripts/bin:$PATH\" hugo",
+    "serve": "npm run hugo -- server",
+    "build": "npm run hugo -- --minify --gc"
+  },
+  "devDependencies": {
+    "@docsy/theme": "0.18.0",
+    "hugo-extended": "0.167.0",
+    "sass-embedded": "1.105.0"
+  },
+  "allowScripts": {
+    "hugo-extended@0.167.0": true
+  }
+}

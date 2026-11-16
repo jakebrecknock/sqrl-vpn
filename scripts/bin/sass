@@ -1,0 +1,6 @@
+#!/bin/sh
+# Points Hugo at the Dart Sass compiler from the sass-embedded npm package.
+# (npm sometimes links the pure-JS "sass" package to node_modules/.bin/sass,
+#  which Hugo can't use, so the npm scripts put this folder first on PATH.)
+DIR="$(cd "$(dirname "$0")/../.." && pwd)"
+exec node "$DIR/node_modules/sass-embedded/dist/bin/sass.js" "$@"

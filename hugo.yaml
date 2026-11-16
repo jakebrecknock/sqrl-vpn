@@ -1,0 +1,81 @@
+# SQrL project site — Hugo + Docsy
+# baseURL is overridden automatically by the GitHub Pages workflow.
+baseURL: https://example.org/
+title: SQrL
+locale: en-US
+
+# Docsy installed as an npm package (no Go / Hugo Modules needed)
+theme: '@docsy/theme'
+themesDir: node_modules
+
+enableRobotsTXT: true
+disableKinds: [taxonomy, term]
+
+markup:
+  goldmark:
+    # Lets ![alt](/images/x.png) find files in assets/images/ and makes links
+    # work when the site is served from a GitHub Pages sub-path.
+    renderHooks:
+      image:
+        useEmbedded: fallback
+      link:
+        useEmbedded: fallback
+    parser:
+      attribute:
+        block: true
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+
+outputs:
+  home: [HTML]
+  section: [HTML, print] # "print" adds a "Print entire section" link
+  page: [HTML]
+
+# Top navigation tabs. Lower weight = further left.
+menu:
+  main:
+    - name: Home
+      pageRef: /
+      weight: 10
+    - name: Tech
+      pageRef: /tech
+      weight: 20
+    - name: Competencies
+      pageRef: /competencies
+      weight: 30
+
+params:
+  description: Building the SQrL VPN.
+  copyright:
+    authors: The SQrL Team
+    from_year: 2026
+  # Once the site is on GitHub, uncomment and set this to get "Edit this page"
+  # and "Create issue" links on the Tech and Competencies pages:
+  # github_repo: https://github.com/USERNAME/REPO
+  # github_branch: main
+
+  # Built-in search box (works on a static site, no server needed)
+  offlineSearch: true
+
+  # Footer links. Uncomment/edit to add icons to the footer, e.g. your repo.
+  # links:
+  #   developer:
+  #     - name: GitHub
+  #       url: https://github.com/USERNAME/REPO
+  #       icon: fab fa-github
+  #       desc: SQrL source code
+
+  ui:
+    navbar_logo: false
+    navbar_theme: dark
+    breadcrumb_disable: false
+    sidebar_menu_compact: false
+    sidebar_menu_foldable: true
+    sidebar_search_disable: false
+    showLightDarkModeMenu: true
+    feedback:
+      enable: false
+    readingtime:
+      enable: false

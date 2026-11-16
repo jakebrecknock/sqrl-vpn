@@ -1,0 +1,20 @@
+// SQrL theme variables
+
+// Colors
+$primary: #2f6fde;   // links, buttons, active tab
+$secondary: #ff9f40; // warm accent, used sparingly
+$success: #22c55e;
+$info: #8ab4ff;
+$warning: #f59e0b;
+$danger: #ef4444;
+$dark: #0b1220;      // deep navy used for the hero and dark sections
+$light: #f5f7fb;
+
+// Fonts (loaded in layouts/_partials/hooks/head-end.html)
+$td-enable-google-fonts: false;
+$font-family-sans-serif: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+$headings-font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+$headings-font-weight: 600;
+
+// Top navbar: deep navy glass (see-through over the homepage hero)
+$td-navbar-bg-color: rgba(11, 18, 32, var(--bs-bg-opacity));
